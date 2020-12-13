@@ -1,12 +1,7 @@
-import org.antlr.v4.runtime.ParserRuleContext;
+import com.google.gson.Gson;
 import org.antlr.v4.runtime.misc.Interval;
-import org.antlr.v4.runtime.tree.ErrorNode;
-import org.antlr.v4.runtime.tree.TerminalNode;
-import org.w3c.dom.ls.LSOutput;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Hashtable;
 
 
@@ -41,38 +36,39 @@ public class PhpDoc extends PhpParserBaseListener {
     public void enterToDoc(PhpParser.ToDocContext ctx) {
 
         PhpClass cls = new PhpClass();
-        cls.name = ctx.classDeclaration().identifier().getText();
+        cls.className = ctx.classDeclaration().identifier().getText();
         cls.description = ctx.Decorator().getText();
         cls.description = cls.description.substring(14,cls.description.length()-2).strip();
-        int a = ctx.classDeclaration().start.getStartIndex();
-        int b = ctx.classDeclaration().stop.getStartIndex();
-        Interval interval = new Interval(a,b);
-        cls.code = ctx.start.getInputStream().getText(interval);
-        cls.code = this.deleteComment(cls.code);
-        this.classTable.put(cls.name,cls);
+        this.classTable.put(cls.className,cls);
         for (PhpParser.ClassStatementContext classSt : ctx.classDeclaration().classStatement()){
             try{
                 if (classSt.funcToDoc()!=null){
                     Func func = new Func();
                     func.description = classSt.funcToDoc().Decorator().getText();
                     func.description = func.description.substring(14,func.description.length()-2).strip();
-                    a = classSt.start.getStartIndex();
-                    b = classSt.stop.getStopIndex();
-                    interval = new Interval(a,b);
+                    int a = classSt.start.getStartIndex();
+                    int b = classSt.stop.getStopIndex();
+                    Interval interval = new Interval(a,b);
                     func.code = classSt.start.getInputStream().getText(interval);
                     func.code = this.deleteComment(func.code);
                     func.signature = ctx.start.getInputStream().getText(interval);
                     func.signature = this.deleteComment(func.signature);
                     int end = PhpDoc.findExpr("{",func.signature);
                     func.signature = func.signature.substring(0,end-1);
-                    cls.functions.add(func);
+                    cls.methods.add(func);
+                }else{
+                    if(classSt.Function()==null){
+                        int a = classSt.start.getStartIndex();
+                        int b = classSt.stop.getStopIndex();
+                        Interval interval = new Interval(a,b);
+                        cls.attrs.add( classSt.start.getInputStream().getText(interval).strip().replace(";",""));
+                    }
                 }
             }
             catch (Exception e){
-                System.out.println(e);
+                //System.out.println(e);
             }
         }
-
     }
 
     @Override
@@ -96,8 +92,12 @@ public class PhpDoc extends PhpParserBaseListener {
 
     @Override
     public void exitHtmlElementOrPhpBlock(PhpParser.HtmlElementOrPhpBlockContext ctx) {
+        Gson gson = new Gson();
+        ArrayList<PhpClass> str = new ArrayList<PhpClass>();
         for (PhpClass c : this.classTable.values()){
-            System.out.println(c);
+            String aux = gson.toJson(c).toString();
+            System.out.println(aux);
+            //str.add(c);
         }
     }
 }

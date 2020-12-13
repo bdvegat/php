@@ -1,13 +1,13 @@
 <?php
 
-/*@doc  dld */
+/*@description dld */
 class Application {
     private $logger;
-
+    /*@description comment */
     public function getLogger(): Logger {
          return $this->logger;
     }
-
+    /*@description comment */
     public function setLogger(Logger $logger) {
          $this->logger = $logger;
     }
@@ -20,5 +20,33 @@ $app->setLogger(new class implements Logger {
     }
 });
 
+/*@description class host controller */
+class HostController {
+/*@description func contrller 1*/
+    static function host() {
+        $host = Host::byId($_GET["id"], $_GET["location"]);
+        if ($host == TRUE) {
+            echo json_encode($host->getArray(0));
+        } else {
+            echo json_encode(array(
+                "message" => "error"
+            ));
+
+        }
+        
+    }
+    
+    static function hostServices() {
+        $host = Host::byId($_GET["id"], $_GET["location"]);
+        if ($host == TRUE) {
+            echo json_encode($host->getServices(0));
+        } else {
+            echo json_encode(array(
+                "message" => "error"
+            ));
+        }
+        
+    }
+}
 var_dump($app->getLogger());
 ?>

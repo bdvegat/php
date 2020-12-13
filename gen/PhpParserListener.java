@@ -1644,4 +1644,14 @@ public interface PhpParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitToDoc(PhpParser.ToDocContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link PhpParser#funcToDoc}.
+	 * @param ctx the parse tree
+	 */
+	void enterFuncToDoc(PhpParser.FuncToDocContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PhpParser#funcToDoc}.
+	 * @param ctx the parse tree
+	 */
+	void exitFuncToDoc(PhpParser.FuncToDocContext ctx);
 }

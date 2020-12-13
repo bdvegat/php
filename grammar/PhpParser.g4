@@ -393,8 +393,7 @@ classStatement
     | attributes memberModifiers? Function '&'? identifier
           typeParameterListInBrackets? '(' formalParameterList ')' baseCtorCall? methodBody
     | Use qualifiedNamespaceNameList traitAdaptations
-    | Decorator attributes memberModifiers? Function '&'? identifier
-                          typeParameterListInBrackets? '(' formalParameterList ')' baseCtorCall? methodBody
+    | funcToDoc
     ;
 
 traitAdaptations
@@ -948,3 +947,8 @@ castOperation
 
 toDoc
     : Decorator classDeclaration;
+
+funcToDoc
+    : Decorator attributes memberModifiers? Function '&'? identifier
+                                typeParameterListInBrackets? '(' formalParameterList ')' baseCtorCall? methodBody
+    ;

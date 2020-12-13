@@ -1918,6 +1918,18 @@ public class PhpParserBaseListener implements PhpParserListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitToDoc(PhpParser.ToDocContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterFuncToDoc(PhpParser.FuncToDocContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFuncToDoc(PhpParser.FuncToDocContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

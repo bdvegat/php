@@ -987,4 +987,10 @@ public interface PhpParserVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitToDoc(PhpParser.ToDocContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link PhpParser#funcToDoc}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFuncToDoc(PhpParser.FuncToDocContext ctx);
 }

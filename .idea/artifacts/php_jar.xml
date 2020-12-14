@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="php:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/php_jar</output-path>
+    <root id="archive" name="php.jar">
+      <element id="module-output" name="php" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/dependencies/antlr-4.8-complete.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/dependencies/gson-2.8.6.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

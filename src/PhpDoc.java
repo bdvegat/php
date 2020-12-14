@@ -95,9 +95,9 @@ public class PhpDoc extends PhpParserBaseListener {
         Gson gson = new Gson();
         ArrayList<PhpClass> str = new ArrayList<PhpClass>();
         for (PhpClass c : this.classTable.values()){
-            String aux = gson.toJson(c).toString();
-            System.out.println(aux);
-            //str.add(c);
+            str.add(c);
         }
+        String aux = gson.toJson(str).toString();
+        System.out.println(aux);
     }
 }
